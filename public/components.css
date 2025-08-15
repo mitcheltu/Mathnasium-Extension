@@ -1,4 +1,4 @@
-#math-ext-right-splitscreen {
+.math-ext-right-splitscreen {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -8,12 +8,14 @@
 }
 
 
-#math-ext-pdf-viewer-container {
-    position: fixed;
+.math-ext-pdf-viewer-container {
+    position: absolute;
+    transition: opacity 0.2s ease;
     top: 0;
     bottom: 0;
     right: 0;
     width: 50%;
+    height: 100%;
     z-index: 10000;
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -41,13 +43,13 @@
 #math-ext-pdf-iframe {
     width: 100%;
     height: 90%;
-    bottom: 0;
-    right: 0;
     border: none;
+    min-width: 320px !important;
+    min-height: 480px !important;
     
 }
 
-#math-ext-button-menu {
+.math-ext-button-menu {
     width: 100%;
     height: 10%;
     top: 0;

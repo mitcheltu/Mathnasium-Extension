@@ -6,8 +6,8 @@
     "background": {
     "service_worker": "background.js"
     },
-    "host_permissions": ["https://radius.mathnasium.com/*","https://vs-view.mathnasium.com/*"],
-    "permissions": ["cookies", "activeTab", "scripting", "tabs", "https://radius.mathnasium.com/*", "https://vs-view.mathnasium.com/*"],
+    "host_permissions": ["https://radius.mathnasium.com/*","https://vs-view.mathnasium.com/*", "https://radius.mathnasium.com/answerkey/*"],
+    "permissions": ["cookies", "activeTab", "scripting", "tabs", "https://radius.mathnasium.com/*", "https://vs-view.mathnasium.com/*", "https://radius.mathnasium.com/answerkey/*"],
     "action": {
         "default_popup": "index.html",
         "default_icon": "icon.png",

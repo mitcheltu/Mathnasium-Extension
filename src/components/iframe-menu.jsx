@@ -1,62 +1,74 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
 
 
 export default function IframeMenu() {
     console.log(4321);
     const [iframes, setIframes] = useState({}); // key_id, url
     const [current, setCurrent] = useState('');
+    const [isOpen, setOpen] = useState(false);
+    const iframeRef = useRef(null);
 
 
-    function embedPDF(answerKey_id, url) { 
-         const container = document.getElementById("math-ext-pdf-viewer-container");
-         container.style.display = "";
 
-        document.body.style.marginRight = '50%';
-        if (!(answerKey_id in iframes)) setIframes((prev) => ({...prev, [answerKey_id]: url}));
-        console.log(iframes);
+    function embedPDF(answerKey_id, url) {
+        setIframes((prev) => {
+            if (answerKey_id in prev) return prev;
+            return { ...prev, [answerKey_id]: url };
+        });
         setCurrent(answerKey_id);
+        setOpen(true);
     }
 
     useEffect(() => {
-        document.addEventListener('click', function(e) {
-            // Find the closest anchor tag to the clicked element
-            console.log('clicked')
-            let target = e.target;
-            console.log(target);
-            console.log(target.href.toLowerCase())
-            if (target && target.href.toLowerCase().includes('getwebviewerdocument')) {
-                let answerKey_id = target.textContent.trim();
-                console.log(answerKey_id);
-            
-    
-                console.log('correct link')
-                e.preventDefault();
-                embedPDF(answerKey_id, target.href);
-            }
-        });
+        console.log("iframes updated:", iframes);
     }, [iframes]);
 
+    useEffect(() => {
+        console.log("isOpen changed to:", isOpen);
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        }, [isOpen]);
+
+    useEffect(() => {
+        function onClick(e) {
+            const anchor = e.target.closest('a');
+            if (anchor && anchor.href) {
+                e.preventDefault();
+                const answerKey_id = anchor.textContent.trim();
+                embedPDF(answerKey_id, anchor.href);
+            }
+        }
+
+        document.addEventListener('click', onClick);
+        return () => document.removeEventListener('click', onClick);
+        }, []);  // empty deps to run once
+
     
 
-    function xButtonClick(){
-        const container = document.getElementById("math-ext-pdf-viewer-container");
-        
-        document.body.style.marginRight = 0;
-        container.style.display = "none";
+    function xButtonClick(){        
+        setOpen(false);
     }
 
 
     
     return(
-        <div id="math-ext-pdf-viewer-container" style={{display: "none"}}>
-            <div id="math-ext-button-menu">
+
+        <div className="math-ext-pdf-viewer-container" style={{ visibility: isOpen && current ? "visible" : "hidden",
+    opacity: isOpen && current ? 1 : 0, pointerEvents: isOpen && current ? "auto" : "none"}}>
+            <div className="math-ext-button-menu">
                 {Object.keys(iframes).map((id) => (
                     <button className="math-ext-menu-buttons" key={id} onClick={() => setCurrent(id)}>
                         {id}
                     </button>
                 ))}
             </div>
-            <iframe id="math-ext-pdf-iframe" src={iframes[current]}></iframe>
+            <iframe id="math-ext-pdf-iframe" ref={iframeRef} src={isOpen ? iframes[current] : ""} title="PDF-Viewer"></iframe>
             <button id="math-ext-X-button" onClick={xButtonClick}>X</button>
             
         </div>
