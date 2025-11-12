@@ -1,23 +1,25 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path';
+import { resolve } from 'path'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
       input: {
-        popup: resolve(__dirname, 'index.html'),
+        background: resolve(__dirname, 'public/background.js'),
+        injector: resolve(__dirname, 'src/inject-components.jsx')
       },
       output: {
-        // Disable hashing, use original names
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
-        assetFileNames: '[name].[ext]',
+        entryFileNames: chunk => {
+          if (chunk.name === 'injector') return 'inject-react.js'
+          if (chunk.name === 'background') return 'background.js'
+          return 'assets/[name].js'
+        },
+        manualChunks: undefined
       }
     },
-    outDir: 'dist',
-  },
-  publicDir: 'public',
-});
+    cssCodeSplit: false,
+    minify: false
+  }
+})

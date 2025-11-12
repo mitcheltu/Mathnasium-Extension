@@ -1,33 +1,31 @@
 {
-    "name": "Mathnasium Extension",
-    "description": "Enhanced User Experience",
-    "version": "1.0",
-    "manifest_version": 3,
-    "background": {
+  "manifest_version": 3,
+  "name": "Mathnasium Extension",
+  "version": "1.0",
+  "permissions": ["activeTab", "scripting", "tabs", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
     "service_worker": "background.js"
-    },
-    "host_permissions": ["https://radius.mathnasium.com/*","https://vs-view.mathnasium.com/*", "https://radius.mathnasium.com/answerkey/*"],
-    "permissions": ["cookies", "activeTab", "scripting", "tabs", "https://radius.mathnasium.com/*", "https://vs-view.mathnasium.com/*", "https://radius.mathnasium.com/answerkey/*"],
-    "action": {
-        "default_popup": "index.html",
-        "default_icon": "icon.png",
-        "default_title": "Toggle Extension"
-    },
-    "commands": {
-        "_execute_action": {
-        "suggested_key": {
-            "default": "Ctrl+B",
-            "mac": "Command+B"
-        }
-        }
-    },
-    "content_scripts": [
-        {
-          "matches": ["https://radius.mathnasium.com/DWP/*"],
-          "js": ["popup.js"],
-          "css": ["components.css"],
-          "run_at": "document_idle"
-        }
-      ]
-
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://radius.mathnasium.com/DWP*", "https://vs-view.mathnasium.com/*"],
+      "js": ["inject-react.js"],
+      "css": ["components.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "libs/tesseract.min.js",
+        "libs/worker.min.js",
+        "libs/tesseract-core.wasm.js",
+        "libs/tesseract-core-simd.wasm.js",
+        "libs/lang-data/eng.traineddata.gz",
+        "components.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

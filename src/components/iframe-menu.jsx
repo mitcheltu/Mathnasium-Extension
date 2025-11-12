@@ -58,6 +58,13 @@ export default function IframeMenu() {
 
     
     return(
+        <>
+        {/* Placeholder to maintain layout when iframe menu is closed */
+            isOpen ? null : 
+            <div style={{ height: '100%', width: '40%', alignItems: 'center', justifyContent: 'center'}}>
+                <h1>Answer Keys Are Displayed Here</h1>
+            </div>
+        }
 
         <div className="math-ext-pdf-viewer-container" style={{ visibility: isOpen && current ? "visible" : "hidden",
     opacity: isOpen && current ? 1 : 0, pointerEvents: isOpen && current ? "auto" : "none"}}>
@@ -72,5 +79,6 @@ export default function IframeMenu() {
             <button id="math-ext-X-button" onClick={xButtonClick}>X</button>
             
         </div>
+        </>
     );
 }

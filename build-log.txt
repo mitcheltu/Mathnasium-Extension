@@ -1,0 +1,13 @@
+
+> math-extension@0.0.0 build
+> vite build
+
+[36mvite v7.0.4 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 1702 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[36mbackground.js          [39m[1m[2m  3.13 kB[22m[1m[22m[2m │ gzip:   1.26 kB[22m
+[2mdist/[22m[36mcontent-screenshot.js  [39m[1m[2m 40.79 kB[22m[1m[22m[2m │ gzip:  10.17 kB[22m
+[2mdist/[22m[36minject-react.js        [39m[1m[33m560.85 kB[39m[22m[2m │ gzip: 100.84 kB[22m
+[32m✓ built in 2.28s[39m
