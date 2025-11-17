@@ -243,16 +243,16 @@ export default function ScreenshotSelector() {
             console.log('[React] LLM processing complete. Received output length:', response.llmOutput?.length);
             setLlmOutput(response.llmOutput);
             setCapturedImage(null); // Clear captured image after processing
+            setFetching(false);
         }
       );
 
 
     } catch (error) {
       console.error('[React] OCR error:', error);
-      alert('OCR failed: ' + error.message);
-    } finally {
       setFetching(false);
-    }
+      alert('OCR failed: ' + error.message);
+    };
   };
 
   

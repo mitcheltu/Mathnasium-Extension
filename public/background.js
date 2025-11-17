@@ -57,7 +57,7 @@ async function handleLLM(ocrText, sendResponse) {
     console.log('[Background] Sending OCR text to LLM gateway...');
     
     const prompt = `You are a Mathnasium instructor assistant that helps instructors give effective hints to students. 
-Your goal is to help the instructor guide the student toward the correct solution — not give away the final answer.
+  Your goal is to help the instructor guide the student toward the correct solution - not give away the final answer.
 
 The student's answer key for their question is shown below:
 
@@ -79,7 +79,7 @@ Format your response as:
 
 If the question is unclear or incomplete, politely note that more information is needed.`;
 
-    const llmResponse = await fetch("http://localhost:3000/api/llm", {
+    const llmResponse = await fetch("https://math-ext-serverless-function.vercel.app/api/llm", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt })
